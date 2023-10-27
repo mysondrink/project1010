@@ -1,4 +1,6 @@
 <template>
+  <!-- 使用card进行包装
+同时使用栅栏布局进行设计 -->
   <div class="main">
     <div class="bg">
       <div class="form">

@@ -25,12 +25,25 @@
             <el-button class="el-icon-mes"></el-button> </el-badge
         ></el-col>
 
-        <el-col :span="1"
-          ><div>
-            <el-avatar
-              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-            ></el-avatar></div
-        ></el-col>
+        <el-col :span="1">
+          <el-dropdown
+            class="avatar-container right-menu-item hover-effect"
+            trigger="click"
+          >
+            <div class="avatar-wrapper">
+              <img
+                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                class="user-avatar"
+              />
+              <i class="el-icon-caret-bottom" />
+            </div>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item divided @click.native="logout">
+                <span style="display: block">Log Out</span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-col>
       </el-row>
     </div>
     <div>
@@ -75,9 +88,9 @@ export default {
   border-radius: 4px;
 }
 
-.app-breadcrumb{
+.app-breadcrumb {
   height: 30px;
-  background-color: #F3F4F7;
+  background-color: #f3f4f7;
   padding-top: 20px;
   padding-left: 20px;
   font-size: 20px;
@@ -128,5 +141,29 @@ export default {
   background: #4285f4;
   border-radius: 0px 0px 0px 0px;
   opacity: 1;
+}
+
+.avatar-container {
+  margin-right: 30px;
+
+  .avatar-wrapper {
+    margin-top: 5px;
+    position: relative;
+
+    .user-avatar {
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+    }
+
+    .el-icon-caret-bottom {
+      cursor: pointer;
+      position: absolute;
+      right: -20px;
+      top: 25px;
+      font-size: 12px;
+    }
+  }
 }
 </style>

@@ -1,53 +1,51 @@
 <template>
   <div class="register-container">
-    <div class="left-container">
-      <el-form
-        :model="registerForm"
-        status-icon
-        :rules="registerRules"
-        ref="registerForm"
-        label-width="100px"
-        class="register-form"
-      >
-        <div class="info-container">
-          <img src="@/assets/titleLabel.png" />
-        </div>
-        <el-form-item prop="name">
-          <el-input
-            v-model.number="registerForm.name"
-            placeholder="用户名"
-            suffix-icon="el-icon-user"
-          ></el-input>
-        </el-form-item>
+    <el-form
+      :model="registerForm"
+      status-icon
+      :rules="registerRules"
+      ref="registerForm"
+      label-width="100px"
+      class="register-form"
+    >
+      <div class="info-container">
+        <img src="@/assets/titleLabel.png" />
+      </div>
+      <el-form-item prop="name">
+        <el-input
+          v-model.number="registerForm.name"
+          placeholder="用户名"
+          suffix-icon="el-icon-user"
+        ></el-input>
+      </el-form-item>
 
-        <el-form-item prop="pass">
-          <el-input
-            type="password"
-            v-model="registerForm.pass"
-            autocomplete="off"
-            placeholder="密码"
-            show-password
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="checkPass">
-          <el-input
-            type="password"
-            v-model="registerForm.checkPass"
-            autocomplete="off"
-            placeholder="再次输入"
-            show-password
-          ></el-input>
-        </el-form-item>
+      <el-form-item prop="pass">
+        <el-input
+          type="password"
+          v-model="registerForm.pass"
+          autocomplete="off"
+          placeholder="密码"
+          show-password
+        ></el-input>
+      </el-form-item>
+      <el-form-item prop="checkPass">
+        <el-input
+          type="password"
+          v-model="registerForm.checkPass"
+          autocomplete="off"
+          placeholder="再次输入"
+          show-password
+        ></el-input>
+      </el-form-item>
 
-        <el-form-item>
-          <el-button @click="submitForm('registerForm')">确认</el-button>
-        </el-form-item>
+      <el-form-item>
+        <el-button @click="submitForm('registerForm')">确认</el-button>
+      </el-form-item>
 
-        <el-form-item>
-          <el-button @click="registerView()">返回</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+      <el-form-item>
+        <el-button @click="registerView()">返回</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
  
@@ -79,6 +77,11 @@ export default {
         checkPass: "",
         name: "",
       },
+      user: {
+        name: "123",
+        password: "123456",
+        telephone: "12345678915",
+      },
       registerRules: {
         pass: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
@@ -88,15 +91,39 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      // 验证数据
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          console.log("register");
+          this.register();
         } else {
           console.log("error submit!!");
           return false;
         }
       });
     },
+    register() {
+      // 请求API
+      const api = "http://localhost:1016/api/auth/register";
+      this.axios
+        .post(api, { ...this.user })
+        .then((res) => {
+          // 保存token
+          console.log(res.data);
+          localStorage.setItem('token', res.data.data.token);
+          this.$message({
+            message: "注册成功",
+            type: "success",
+          });
+          // 跳转主页
+          this.$router.replace('/login');
+        })
+        .catch((err) => {
+          // console.log("err:", err.response.data.msg);
+          this.$message.error(err.response.data.msg);
+        });
+    },
+
     registerView() {
       this.$router.push("/login");
     },
@@ -105,35 +132,6 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.register-container {
-  // position: relative;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  overflow-y: hidden;
-  background: url(~@/assets/login_2.jpg);
-  background-size: 100% 100%;
-  top: 0px; // 这里是设置与顶部的距离
-  left: 0px; // 这里是设置与左边的距离
-
-  .left-container {
-    width: 37%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 0px 0px 0px 0px;
-    opacity: 1;
-
-    .register-form {
-      position: relative;
-      min-width: 200px;
-      max-width: 100%;
-      padding: 160px 100px 0;
-      margin: 0 auto;
-      // overflow: hidden;
-    }
-  }
-}
-
 .el-input {
   width: 288px;
   height: 51px;

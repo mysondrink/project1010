@@ -1,44 +1,48 @@
 <template>
   <div class="login-container">
-    <div class="left-container">
-      <el-form
-        :model="loginForm"
-        :rules="loginRules"
-        ref="loginForm"
-        label-width="100px"
-        class="login-form"
-      >
-        <div class="info-container">
-          <img src="@/assets/titleLabel.png" />
-        </div>
+    <el-row>
+      <el-col>
+        <el-form
+          :model="loginForm"
+          :rules="loginRules"
+          ref="loginForm"
+          label-width="100px"
+          class="login-form"
+        >
+          <div class="info-container">
+            <img src="@/assets/titleLabel.png" />
+          </div>
 
-        <!-- 用户名 -->
-        <el-form-item prop="name">
-          <el-input
-            v-model="loginForm.name"
-            placeholder="用户名"
-            suffix-icon="el-icon-user"
-          ></el-input>
-        </el-form-item>
-        <!-- 密码 -->
-        <el-form-item prop="password">
-          <el-input
-            v-model="loginForm.password"
-            placeholder="密码"
-            show-password
-          ></el-input>
-        </el-form-item>
+          <!-- 用户名 -->
+          <el-form-item prop="name">
+            <el-input
+              v-model="loginForm.name"
+              placeholder="用户名"
+              suffix-icon="el-icon-user"
+              type="text"
+            ></el-input>
+          </el-form-item>
+          <!-- 密码 -->
+          <el-form-item prop="password">
+            <el-input
+              v-model="loginForm.password"
+              placeholder="密码"
+              show-password
+              type="password"
+            ></el-input>
+          </el-form-item>
 
-        <!-- 按钮跳转 -->
-        <el-form-item>
-          <el-button @click="submitForm()">登录</el-button>
-        </el-form-item>
+          <!-- 按钮跳转 -->
+          <el-form-item>
+            <el-button @click="submitForm('loginForm')">登录</el-button>
+          </el-form-item>
 
-        <el-form-item>
-          <el-button @click="registerView()">注册</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+          <el-form-item>
+            <el-button @click="registerView()">注册</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -52,6 +56,7 @@ export default {
         //初始值
         name: "",
         password: "",
+        telephone: "12345678911",
       },
       loginRules: {
         //验证校验
@@ -62,8 +67,15 @@ export default {
   },
   methods: {
     // 页面跳转
-    submitForm() {
-      this.$router.push("/index");
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$router.push("/index");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
     registerView() {
       this.$router.push("/register");
@@ -73,37 +85,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.login-container {
-  position: relative; /* 设置父元素为相对定位 */
-  min-height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  overflow-y: hidden;
-  background: url(~@/assets/login_2.jpg);
-  background-size: 100% 100%;
-  top: 0px; // 这里是设置与顶部的距离
-  left: 0px; // 这里是设置与左边的距离
-
-  .left-container {
-    overflow: hidden;
-    position: absolute; /* 设置子元素为绝对定位 */
-    width: 37%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 0px 0px 0px 0px;
-    opacity: 1;
-
-    .login-form {
-      position: absolute; /* 设置子元素为相对定位 */
-      min-width: 200px;
-      max-width: 100%;
-      padding: 160px 100px 0;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-  }
-}
-
 .el-input {
   width: 288px;
   height: 51px;

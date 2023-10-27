@@ -24,9 +24,9 @@
 //   width: 0 !important;height: 0;
 // }
 
-#app {
-  min-width: 1024px;
-  min-height: 768px;
-}
+// #app {
+//   min-width: 1024px;
+//   min-height: 768px;
+// }
 
 </style>

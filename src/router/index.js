@@ -9,17 +9,25 @@ const routes = [
     path: '/',
     redirect: '/login',
   },
+  // 登录主页
   {
-    //登录页
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/login/login.vue')
-  },
-  {
-    //注册页
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/register/register.vue')
+    path: '/homepage',
+    name: 'homepage',
+    component: () => import('../views/login/index.vue'),
+    children: [
+      {
+        //登录页
+        path: '/login',
+        name: 'login',
+        component: () => import('../views/login/login.vue')
+      },
+      {
+        //注册页
+        path: '/register',
+        name: 'register',
+        component: () => import('../views/register/register.vue')
+      },
+    ]
   },
   {
     // 布局页
