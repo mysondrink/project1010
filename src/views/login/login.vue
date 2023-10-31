@@ -34,7 +34,8 @@
 
           <!-- 按钮跳转 -->
           <el-form-item>
-            <el-button @click="submitForm('loginForm')">登录</el-button>
+            <!-- <el-button @click="submitForm('loginForm')">登录</el-button> -->
+            <el-button @click="getInfo()">登录</el-button>
           </el-form-item>
 
           <el-form-item>
@@ -47,6 +48,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "Login",
   components: {},
@@ -56,21 +59,32 @@ export default {
         //初始值
         name: "",
         password: "",
-        telephone: "12345678911",
+        telephone: "12345678914",
+      },
+      user: {
+        //初始值
+        name: "",
+        password: "12345678911",
+        telephone: "1234567891",
       },
       loginRules: {
         //验证校验
         name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
+      trail: {
+        trail_id: "123",
+      },
     };
   },
   methods: {
+    // 重命名
+    ...mapActions("userModule", { userLogin: "login" }),
     // 页面跳转
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$router.push("/index");
+          this.login();
         } else {
           console.log("error submit!!");
           return false;
@@ -79,6 +93,20 @@ export default {
     },
     registerView() {
       this.$router.push("/register");
+    },
+    login() {
+      this.userLogin(this.user)
+        .then(() => {
+          // 跳转首页
+          this.$message({
+            message: "登录成功",
+            type: "success",
+          });
+          this.$router.replace("./index");
+        })
+        .catch((err) => {
+          console.log("err: ", err.response.data.msg);
+        });
     },
   },
 };

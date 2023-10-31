@@ -36,13 +36,22 @@
         </el-table-column>
 
         <el-table-column prop="telec" label="TX状态" width="180">
+           <template slot-scope="scope">
+        <el-tag type="success" effect="dark">正常</el-tag>
+        </template>
         </el-table-column>
         <el-table-column prop="receive" label="RX状态" width="180">
+           <template slot-scope="scope">
+        <el-tag type="success" effect="dark">正常</el-tag>
+        </template>
         </el-table-column>
         <el-table-column prop="rate" label="丢包率" width="180">
         </el-table-column>
         </el-table-column>
         <el-table-column prop="detail" label="详情" width="180">
+          <template slot-scope="scope">
+          <el-button type="primary" @click="checkDetail()">详情</el-button>
+        </template>
         </el-table-column>
       </el-table>
       <!-- 页数跳转 -->

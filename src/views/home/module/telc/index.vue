@@ -34,13 +34,22 @@
         </el-table-column>
 
         <el-table-column prop="telec" label="TX状态" width="180">
+          <template slot-scope="scope">
+        <el-tag type="danger" effect="dark">错误</el-tag>
+        </template>
         </el-table-column>
         <el-table-column prop="receive" label="RX状态" width="180">
+          <template slot-scope="scope">
+        <el-tag type="success" effect="dark">正常</el-tag>
+        </template>
         </el-table-column>
         <el-table-column prop="rate" label="丢包率" width="180">
         </el-table-column>
         </el-table-column>
         <el-table-column prop="detail" label="详情" width="180">
+          <template slot-scope="scope">
+          <el-button type="primary" @click="checkDetail()">详情</el-button>
+        </template>
         </el-table-column>
       </el-table>
       <!-- 页数跳转 -->
@@ -151,7 +160,7 @@ export default {
 }
 
 /* 样式穿透 /deep/ or >>> */
-.el-form-item /deep/ .el-form-item__label{
+.el-form-item /deep/ .el-form-item__label {
   font-size: 18px;
   font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
   font-weight: 400;
@@ -159,7 +168,7 @@ export default {
 }
 
 .el-input /deep/ .el-input__inner,
-.el-select /deep/ .el-input__inner  {
+.el-select /deep/ .el-input__inner {
   font-size: 20px;
   font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
   font-weight: 400;

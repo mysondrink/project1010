@@ -21,6 +21,11 @@
           </el-select>
         </el-form-item>
         <el-form-item>
+          <el-tag type="success" style="margin-left: 10px" >已装载</el-tag>
+          <el-tag type="info" style="margin-left: 10px" >空</el-tag>
+          <el-tag type="warning" style="margin-left: 10px" >正在移动</el-tag>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
         </el-form-item>
         <el-form-item>
@@ -28,6 +33,11 @@
         </el-form-item>
       </el-form>
       <el-table :data="tableData" stripe style="width: 100%">
+        <el-table-column prop="num" label="编号" width="180">
+          <template>
+            <el-tag type="success" >已装载</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="num" label="编号" width="180">
         </el-table-column>
 
@@ -47,6 +57,9 @@
         </el-table-column>
         </el-table-column>
         <el-table-column prop="detail" label="详情" width="180">
+          <template slot-scope="scope">
+          <el-button type="primary" @click="checkDetail()">详情</el-button>
+        </template>
         </el-table-column>
       </el-table>
       <!-- 页数跳转 -->
@@ -163,7 +176,7 @@ export default {
 }
 
 /* 样式穿透 /deep/ or >>> */
-.el-form-item /deep/ .el-form-item__label{
+.el-form-item /deep/ .el-form-item__label {
   font-size: 18px;
   font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
   font-weight: 400;

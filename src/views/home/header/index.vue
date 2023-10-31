@@ -28,7 +28,7 @@
         <el-col :span="1">
           <el-dropdown
             class="avatar-container right-menu-item hover-effect"
-            trigger="click"
+            @command="handleCommand"
           >
             <div class="avatar-wrapper">
               <img
@@ -38,8 +38,8 @@
               <i class="el-icon-caret-bottom" />
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item divided @click.native="logout">
-                <span style="display: block">Log Out</span>
+              <el-dropdown-item divided command="logout">
+                <span style="display: block">登出</span>
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -47,25 +47,40 @@
       </el-row>
     </div>
     <div>
-      <el-breadcrumb
-        separator-class="el-icon-arrow-right"
-        class="app-breadcrumb"
-      >
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>状态</el-breadcrumb-item>
-      </el-breadcrumb>
+      <breadcrumb />
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import breadcrumb from "./breadcrumb.vue";
 export default {
   data() {
     return {
       input: "",
     };
   },
+  components: {
+    breadcrumb,
+  },
   methods: {
+    handleCommand(command) {
+      switch (command) {
+        case "logout":
+          mapActions("userModule", ["logout"]);
+          this.$message({
+            message: "登出成功",
+            type: "success",
+          });
+          this.$router.replace("./login");
+          break;
+
+        default:
+          break;
+      }
+    },
+
     turnToHome() {
       const currentRoute = this.$router.history.current.path; // 获取当前路由
       const targetRoute = "/index"; // 目标路由，根据实际情况修改
@@ -86,14 +101,6 @@ export default {
 .el-col {
   margin-top: 40px;
   border-radius: 4px;
-}
-
-.app-breadcrumb {
-  height: 30px;
-  background-color: #f3f4f7;
-  padding-top: 20px;
-  padding-left: 20px;
-  font-size: 20px;
 }
 
 // 样式穿透 /deep/ or >>>

@@ -50,6 +50,10 @@
 </template>
  
 <script>
+import storageService from "@/service/storageService";
+import userService from "@/service/userService";
+
+import { mapActions } from "vuex";
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -80,7 +84,7 @@ export default {
       user: {
         name: "123",
         password: "123456",
-        telephone: "12345678915",
+        telephone: "12312312312",
       },
       registerRules: {
         pass: [{ validator: validatePass, trigger: "blur" }],
@@ -90,6 +94,9 @@ export default {
     };
   },
   methods: {
+    // 重命名
+    ...mapActions("userModule", { userRegister: "register" }),
+
     submitForm(formName) {
       // 验证数据
       this.$refs[formName].validate((valid) => {
@@ -103,24 +110,38 @@ export default {
       });
     },
     register() {
+      // 原方法
       // 请求API
-      const api = "http://localhost:1016/api/auth/register";
-      this.axios
-        .post(api, { ...this.user })
-        .then((res) => {
-          // 保存token
-          console.log(res.data);
-          localStorage.setItem('token', res.data.data.token);
+      // const api = "http://localhost:1016/api/auth/register";
+      // this.axios
+      //   .post(api, { ...this.user })
+      //   .then((res) => {
+      //     // 保存token
+      //     console.log(res.data);
+      //     localStorage.setItem('token', res.data.data.token);
+      //     this.$message({
+      //       message: "注册成功",
+      //       type: "success",
+      //     });
+      //     // 跳转主页
+      //     this.$router.replace('/login');
+      //   })
+      //   .catch((err) => {
+      //     // console.log("err:", err.response.data.msg);
+      //     this.$message.error(err.response.data.msg);
+      //   });
+
+      this.userRegister(this.user)
+        .then(() => {
+          // 跳转首页
           this.$message({
             message: "注册成功",
             type: "success",
           });
-          // 跳转主页
-          this.$router.replace('/login');
+          this.$router.replace("./login");
         })
         .catch((err) => {
-          // console.log("err:", err.response.data.msg);
-          this.$message.error(err.response.data.msg);
+          console.log("err: ", err.response.data.msg);
         });
     },
 

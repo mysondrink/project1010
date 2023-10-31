@@ -30,6 +30,9 @@
         <el-table-column prop="duration" label="时长" width="180">
         </el-table-column>
         <el-table-column prop="detail" label="详情" width="180">
+          <template slot-scope="scope">
+          <el-button type="primary" @click="checkDetail()">详情</el-button>
+        </template>
         </el-table-column>
       </el-table>
       <h1>请求至</h1>

@@ -34,8 +34,14 @@
         <el-table-column prop="time" label="剩余时间" width="180">
         </el-table-column>
         <el-table-column prop="stats" label="运行状态" width="180">
+          <template slot-scope="scope">
+        <el-tag type="warning" effect="dark">警告</el-tag>
+        </template>
         </el-table-column>
         <el-table-column prop="detail" label="详情" width="180">
+          <template slot-scope="scope">
+          <el-button type="primary" @click="checkDetail()">详情</el-button>
+        </template>
         </el-table-column>
       </el-table>
       <!-- 页数跳转 -->

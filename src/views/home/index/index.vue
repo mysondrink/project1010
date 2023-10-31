@@ -318,4 +318,5 @@ export default {
   /* height: 48%; */
   height: 150px;
 }
+
 </style>

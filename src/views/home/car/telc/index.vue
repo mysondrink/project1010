@@ -36,6 +36,9 @@
         <el-table-column prop="waitcar" label="等待队列的运输车" width="180">
         </el-table-column>
         <el-table-column prop="detail" label="详情" width="180">
+          <template slot-scope="scope">
+          <el-button type="primary" @click="checkDetail()">详情</el-button>
+        </template>
         </el-table-column>
       </el-table>
       <!-- 页数跳转 -->

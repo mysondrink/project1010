@@ -96,6 +96,7 @@ export default {
       moveLen: 0,
     };
   },
+  // 类似程序main函数进口
   mounted() {
     // this.canvas = this.$refs.canvas;
     // this.ctx = this.$refs.canvas.getContext("2d");
