@@ -27,14 +27,15 @@
       </el-form-item>
     </el-form>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="ctype" label="控制器类型" width="180">
+      <el-table-column prop="controller_type" label="控制器类型" width="180">
       </el-table-column>
-      <el-table-column prop="mtype" label="模块类型" width="180">
+      <el-table-column prop="module_type" label="模块类型" width="180">
       </el-table-column>
-      <el-table-column prop="id" label="ID号" width="180"> </el-table-column>
-      <el-table-column prop="sum" label="轨道容量" width="180">
+      <el-table-column prop="controller_id" label="ID号" width="180">
       </el-table-column>
-      <el-table-column prop="stats" label="运行状态" width="180">
+      <el-table-column prop="charge_area" label="轨道容量" width="180">
+      </el-table-column>
+      <el-table-column prop="status" label="运行状态" width="180">
         <template slot-scope="scope">
           <el-tag type="success" effect="dark">正常</el-tag>
         </template>
@@ -88,39 +89,28 @@ export default {
       },
       tableData: [
         {
-          ctype: "轨道",
-          mtype: "-",
-          id: "Rail-1",
-          sum: "5/48",
-          stats: "success",
+          controller_type: "轨道",
+          module_type: "",
+          controller_id: "",
+          charge_area: 12,
+          status: "",
+          detail: "",
         },
         {
-          ctype: "轨道",
-          mtype: "-",
-          id: "Rail-1",
-          sum: "5/48",
-          stats: "success",
+          controller_type: "轨道",
+          module_type: "",
+          controller_id: "",
+          charge_area: 12,
+          status: "",
+          detail: "",
         },
         {
-          ctype: "轨道",
-          mtype: "-",
-          id: "Rail-1",
-          sum: "5/48",
-          stats: "success",
-        },
-        {
-          ctype: "轨道",
-          mtype: "-",
-          id: "Rail-1",
-          sum: "5/48",
-          stats: "success",
-        },
-        {
-          ctype: "轨道",
-          mtype: "-",
-          id: "Rail-1",
-          sum: "5/48",
-          stats: "success",
+          controller_type: "轨道",
+          module_type: "",
+          controller_id: "",
+          charge_area: 12,
+          status: "",
+          detail: "",
         },
       ],
       currentPage1: 5,
@@ -128,20 +118,12 @@ export default {
       currentPage3: 5,
       currentPage4: 4,
       dialogVisible: false,
-      table: {
-        start_time: "",
-        end_time: "",
-        trail_name: "轨道",
+      tableItem: {
+        controller_type: "轨道",
         module_type: "",
-        trail_type: "",
-        trail_id: 0,
-        car_id: 0,
-        car_type: "",
+        controller_id: "",
+        charge_area: 12,
         status: "",
-        create_time: "",
-        update_time: "",
-        charge_area: 0,
-        tran_area: 0,
       },
     };
   },
@@ -168,10 +150,13 @@ export default {
     },
     getTable() {
       console.log("getTable!");
-      this.trailTable(this.table)
+      this.trailTable(this.tableItem)
         .then((res) => {
-          console.log(res.data.data);
-          console.log(res);
+          if (res.data.code == "200") {
+            console.log(this.tableItem);
+            this.tableItem = res.data.data.data;
+            console.log(this.tableItem);
+          }
         })
         .catch((err) => {
           console.log("err: ", err.response.data.msg);

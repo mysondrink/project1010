@@ -54,7 +54,7 @@ const userModule = {
                 });
             });
         },
-        logout({ commit }) {
+        logout( context ) {
             // 清除token
             context.commit('SET_TOKEN', "");
 

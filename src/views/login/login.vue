@@ -35,7 +35,7 @@
           <!-- 按钮跳转 -->
           <el-form-item>
             <!-- <el-button @click="submitForm('loginForm')">登录</el-button> -->
-            <el-button @click="getInfo()">登录</el-button>
+            <el-button @click="login()">登录</el-button>
           </el-form-item>
 
           <el-form-item>
@@ -65,15 +65,12 @@ export default {
         //初始值
         name: "",
         password: "12345678911",
-        telephone: "1234567891",
+        telephone: "12345678914",
       },
       loginRules: {
         //验证校验
         name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
-      },
-      trail: {
-        trail_id: "123",
       },
     };
   },
