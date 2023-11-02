@@ -2,63 +2,96 @@
   <div class="main">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="轨道名称">
-        <el-input v-model="formInline.user" placeholder="请输入内容"></el-input>
+        <el-input
+          v-model="formInline.trail_type"
+          placeholder="请输入内容"
+        ></el-input>
       </el-form-item>
-      <el-form-item label="活动区域">
-        <el-select v-model="formInline.region" placeholder="活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+      <el-form-item label="状态">
+        <el-select v-model="formInline.status" placeholder="状态">
+          <el-option label="正常" value="正常"></el-option>
+          <el-option label="警告" value="警告"></el-option>
+          <el-option label="错误" value="错误"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" icon="el-icon-search"
+        <el-button type="primary" @click="submitSearch()" icon="el-icon-search"
           >查询</el-button
         >
       </el-form-item>
-      <el-form-item>
+      <!-- <el-form-item>
         <el-button type="primary" @click="onSubmit" icon="el-icon-plus"
           >新增</el-button
         >
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
-        <el-button type="primary" @click="onSubmit" icon="el-icon-refresh-right"
+        <el-button
+          type="primary"
+          @click="clearSearch"
+          icon="el-icon-refresh-right"
           >重置</el-button
         >
       </el-form-item>
     </el-form>
-    <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="controller_type" label="控制器类型" width="180">
+
+    <el-table :data="tableNewData" stripe>
+      <el-table-column
+        prop="controller_type"
+        label="控制器类型"
+        min-width="180"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="module_type" label="模块类型" width="180">
+      <el-table-column
+        prop="module_type"
+        label="模块类型"
+        min-width="180"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="controller_id" label="ID号" width="180">
+      <el-table-column
+        prop="controller_id"
+        label="ID号"
+        min-width="180"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="charge_area" label="轨道容量" width="180">
+      <el-table-column
+        prop="trail_type"
+        label="名称"
+        min-width="180"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="status" label="运行状态" width="180">
+      <el-table-column
+        prop="status"
+        label="状态"
+        min-width="180"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-tag type="success" effect="dark">正常</el-tag>
+          <el-tag
+            :type="
+              scope.row.status === '正常'
+                ? 'success'
+                : scope.row.status === '警告'
+                ? 'warning'
+                : 'danger'
+            "
+            disable-transitions
+            effect="dark"
+            >{{ scope.row.status }}</el-tag
+          >
         </template>
       </el-table-column>
-      <el-table-column prop="detail" label="详情" width="180">
+      <el-table-column
+        prop="detail"
+        label="详情"
+        min-width="180"
+        align="center"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" @click="dialogVisible = true"
-            >详情</el-button
-          >
-          <template>
-            <el-dialog :visible.sync="dialogVisible" class="dl">
-              <div slot="title" class="dialog-title">
-                <span class="title-text">轨道详情</span>
-              </div>
-              <span>这是一段信息</span>
-              <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dialogVisible = false"
-                  >确 定</el-button
-                >
-              </span>
-            </el-dialog>
-          </template>
+          <el-button type="primary" @click="showDetail()">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -67,79 +100,92 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[20, 40, 60, 80, 100]"
-        :page-size="20"
+        :current-page="currentPage"
+        :page-sizes="[10]"
+        :page-size="PagaSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="100"
+        :total="totalPage"
       >
       </el-pagination>
     </div>
+    <MyDialog :dialogVisible.sync="dialogVisible" />
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import MyDialog from "@/views/home/dialog/index.vue";
 export default {
   data() {
     return {
       formInline: {
-        user: "",
-        region: "",
-      },
-      tableData: [
-        {
-          controller_type: "轨道",
-          module_type: "",
-          controller_id: "",
-          charge_area: 12,
-          status: "",
-          detail: "",
-        },
-        {
-          controller_type: "轨道",
-          module_type: "",
-          controller_id: "",
-          charge_area: 12,
-          status: "",
-          detail: "",
-        },
-        {
-          controller_type: "轨道",
-          module_type: "",
-          controller_id: "",
-          charge_area: 12,
-          status: "",
-          detail: "",
-        },
-      ],
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
-      dialogVisible: false,
-      tableItem: {
-        controller_type: "轨道",
-        module_type: "",
-        controller_id: "",
-        charge_area: 12,
+        trail_type: "",
         status: "",
+      },
+      tableData: [], //原始数据
+      tableNewData: [], //添加的数据
+      currentPage: 1,
+      PagaSize: 10,
+      PageLength: null,
+      totalPage: null,
+      dialogVisible: false,
+      searchItem: {
+        controller_type: "轨道",
       },
     };
   },
   methods: {
     ...mapActions("userModule", { trailTable: "trailinfo" }),
-    onSubmit() {
-      console.log("submit!");
+    submitSearch() {
+      if (this.formInline.trail_type != "" && this.formInline.status != "") {
+        // 查询名称和状态
+        this.tableNewData = this.tableData.filter((item) => {
+          if (
+            item.trail_type == this.formInline.trail_type &&
+            item.status == this.formInline.status
+          ) {
+            return item;
+          }
+        });
+      } else if (this.formInline.status != "") {
+        // 只查询状态
+        this.tableNewData = this.tableData.filter((item) => {
+          if (item.status == this.formInline.status) {
+            return item;
+          }
+        });
+      } else if (this.formInline.trail_type != "") {
+        // 只查询名称
+        this.tableNewData = this.tableData.filter((item) => {
+          if (item.trail_type == this.formInline.trail_type) {
+            return item;
+          }
+        });
+      } else {
+        return;
+      }
+    },
+    clearSearch() {
+      this.formInline.trail_type = "";
+      this.formInline.status = "";
+      this.tableNewData = this.tableData;
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
+
     handleCurrentChange(val) {
+      this.tableNewData = [];
+      let num = this.PagaSize * (val - 1);
+      let pageSize = 10;
+      if (this.totalPage - num < 10) {
+        pageSize = this.totalPage - num;
+      }
+      console.log(pageSize);
+      for (let index = 0; index < pageSize; index++) {
+        this.tableNewData.push(this.tableData[num + index]);
+      }
       console.log(`当前页: ${val}`);
-    },
-    checkDetail() {
-      console.log("detail!");
     },
     handleClose(done) {
       this.$confirm("确认关闭？")
@@ -149,22 +195,53 @@ export default {
         .catch((_) => {});
     },
     getTable() {
-      console.log("getTable!");
-      this.trailTable(this.tableItem)
+      this.trailTable(this.searchItem)
         .then((res) => {
-          if (res.data.code == "200") {
-            console.log(this.tableItem);
-            this.tableItem = res.data.data.data;
-            console.log(this.tableItem);
+          if (res.data.code == "200" && res.data.data.data != null) {
+            this.checkData(res.data.data.data);
           }
         })
         .catch((err) => {
           console.log("err: ", err.response.data.msg);
         });
     },
+    // 将状态转为汉字
+    checkData(data) {
+      for (let index = 0; index < data.length; index++) {
+        if (data[index].status === "success") {
+          data[index].status = "正常";
+        } else if (data[index.status] == "warning") {
+          data[index].status = "警告";
+        } else {
+          data[index].status = "错误";
+        }
+        data[index].sum = data[index].charge_area + data[index].trans_area;
+        data[index].module_type = "-";
+      }
+      this.tableData = data;
+      // this.tableNewData = this.tableData;
+      for (let index = 0; index < 100; index++) {
+        this.tableData.push(data[1]);
+      }
+      this.totalPage = this.tableData.length;
+      this.PageLength = Math.ceil(this.totalPage / this.PagaSize);
+      this.handleCurrentChange(1);
+    },
+    showDetail() {
+      console.log("detail!");
+      this.dialogVisible = true;
+      // this.dialogNewData = this.dialogData;
+    },
+    handleClick(row) {
+      console.log(row);
+    },
+    
   },
   mounted() {
     this.getTable();
+  },
+  components: {
+    MyDialog,
   },
 };
 </script>
@@ -210,38 +287,4 @@ export default {
   font-weight: 400;
   text-align: center;
 }
-
-.dl .el-dialog {
-  position: absolute;
-  width: 824px;
-  height: 695px;
-  background: #ffffff;
-  border-radius: 20px 20px 20px 20px;
-  opacity: 1;
-}
-
-.el-dialog__header {
-  padding: 0px 0px 0px;
-}
-
-.dialog-title {
-  width: 100%;
-  height: 65px;
-  background: #4285f4;
-  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.25);
-  border-radius: 20px 20px 20px 20px;
-  opacity: 1;
-}
-/* 
-.el-table .title-text {
-  width: 100px;
-  height: 25px;
-  font-size: 20px;
-  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
-  font-weight: 400;
-  color: #ffffff;
-  line-height: 23px;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-} */
 </style>

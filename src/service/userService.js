@@ -16,8 +16,8 @@ const login = ({ telephone, password }) => {
 }
 
 // 轨道
-const trailinfo = ({ trail_name }) => {
-    return request.get('trail/info', { params: { trail_name: trail_name } });
+const trailinfo = ({ controller_type }) => {
+    return request.get('trail/info', { params: { Controller_type: controller_type } });
 };
 
 export default {

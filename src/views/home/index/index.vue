@@ -6,12 +6,12 @@
       >
       <el-col :span="7" :offset="1"
         ><el-row>
-          <el-button>轨道状态</el-button>
-          <el-button type="primary">模块状态</el-button>
+          <el-button @click="goToPage(1)">轨道状态</el-button>
+          <el-button type="primary" @click="goToPage(2)">模块状态</el-button>
         </el-row>
         <el-row>
-          <el-button>轨道通信</el-button>
-          <el-button type="primary">模块通信</el-button>
+          <el-button @click="goToPage(3)">轨道通信</el-button>
+          <el-button type="primary" @click="goToPage(4)">模块通信</el-button>
         </el-row></el-col
       >
     </el-row>
@@ -161,6 +161,26 @@ export default {
           this.days.push(date);
         }
       }
+    },
+    goToPage(num) {
+      var path = "";
+      switch (num) {
+        case 1:
+          path = "/trail/stats";
+          break;
+        case 2:
+          path = "/module/stats";
+          break;
+        case 3:
+          path = "/trail/telc";
+          break;
+        case 4:
+          path = "/module/telc";
+          break;
+        default:
+          break;
+      }
+      this.$router.push(path);
     },
   },
   created() {
@@ -318,5 +338,4 @@ export default {
   /* height: 48%; */
   height: 150px;
 }
-
 </style>

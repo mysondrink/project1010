@@ -66,9 +66,9 @@ const userModule = {
             storageService.set(storageService.USER_INFO, "");
         },
         // 轨道请求
-        trailinfo(context, { trail_name }) {
+        trailinfo(context, { controller_type }) {
             return new Promise((resolve, reject) => {
-                userService.trailinfo({ trail_name }).then((res) => {
+                userService.trailinfo({ controller_type }).then((res) => {
                     resolve(res);
                 }).catch((err) => {
                     reject(err);
