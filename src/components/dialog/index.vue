@@ -53,7 +53,7 @@
         </el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer" align="center">
-        <el-pagination
+        <el-pagination class="pagination"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
@@ -70,7 +70,6 @@
 
 <script>
 import indexjs from "./index.js";
-
 export default {
   ...indexjs,
 };

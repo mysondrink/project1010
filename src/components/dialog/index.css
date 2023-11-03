@@ -1,4 +1,4 @@
-.dl /deep/ .el-dialog__header {
+.dl .el-dialog__header {
   padding: 0px 0px 0px;
 }
 
@@ -11,7 +11,7 @@
   opacity: 1;
 }
 
-.dl /deep/ .el-dialog__headerbtn {
+.dl .el-dialog__headerbtn {
   position: absolute;
   top: 10px;
   width: 40px;
@@ -19,7 +19,7 @@
   font-size: 40px;
 }
 
-.dl /deep/ .el-dialog__headerbtn .el-dialog__close {
+.dl .el-dialog__headerbtn .el-dialog__close {
   color: #ffffff;
 }
 
@@ -31,4 +31,8 @@
   font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
   font-weight: 400;
   color: #ffffff;
+}
+
+.pagination {
+  top: 550px;
 }

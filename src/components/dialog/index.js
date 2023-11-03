@@ -1,3 +1,5 @@
+import pagination from '../pagination/index.vue';
+
 export default {
   name: "MyDialog",
   data() {
@@ -134,5 +136,8 @@ export default {
     },
   },
   mounted() {},
+  components: {
+    pagination,
+  },
 };
 
