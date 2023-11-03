@@ -1,0 +1,16 @@
+.el-pagination {
+    position: absolute;
+    height: 50px;
+    top: 800px;
+    right: 0;
+    font-size: 18px;
+}
+
+.el-pagination li {
+    font-size: 18px;
+    font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
+}
+.el-pagination button, .el-pagination span:not([class*=suffix]) {
+    font-size: 18px;
+    font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
+}

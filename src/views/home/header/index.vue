@@ -54,7 +54,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import breadcrumb from "./breadcrumb.vue";
+import breadcrumb from "@/components/breadcrunmb/index.vue";
 export default {
   data() {
     return {
