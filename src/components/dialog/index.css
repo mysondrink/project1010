@@ -33,6 +33,22 @@
   color: #ffffff;
 }
 
+.el-dialog {
+  min-width: 770px;
+  min-height: 600px;
+}
+
 .pagination {
-  top: 550px;
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+}
+
+.pagination li {
+  font-size: 18px;
+  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
+}
+.pagination button, .pagination span:not([class*=suffix]) {
+  font-size: 18px;
+  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
 }

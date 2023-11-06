@@ -19,11 +19,7 @@
           >查询</el-button
         >
       </el-form-item>
-      <!-- <el-form-item>
-        <el-button type="primary" @click="onSubmit" icon="el-icon-plus"
-          >新增</el-button
-        >
-      </el-form-item> -->
+
       <el-form-item>
         <el-button
           type="primary"
@@ -33,51 +29,64 @@
         >
       </el-form-item>
     </el-form>
-
+    <!-- 第五列为状态
+    第六列为详情 -->
     <el-table :data="tableData" stripe>
-      <el-table-column
-        v-for="v in columnTitle"
-        :prop="v.prop"
-        :label="v.label"
-        :min-width="v.minwidth"
-        :align="v.align"
-      >
-      </el-table-column>
-      <el-table-column
-        prop="status"
-        label="状态"
-        min-width="180"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <el-tag
-            :type="
-              scope.row.status === '正常'
-                ? 'success'
-                : scope.row.status === '警告'
-                ? 'warning'
-                : 'danger'
-            "
-            disable-transitions
-            effect="dark"
-            >{{ scope.row.status }}</el-tag
-          >
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="detail"
-        label="详情"
-        min-width="180"
-        align="center"
-      >
-        <template slot-scope="scope">
-          <el-button type="primary" @click="showDetail()">详情</el-button>
-        </template>
-      </el-table-column>
+      <template v-for="(v, k) in columnTitle">
+        <el-table-column
+          :prop="v.prop"
+          :label="v.label"
+          :min-width="v.minwidth"
+          :align="v.align"
+          :key="k"
+          v-if="k == 4"
+        >
+          <template slot-scope="scope">
+            <el-tag
+              :type="
+                scope.row.status === '正常'
+                  ? 'success'
+                  : scope.row.status === '警告'
+                  ? 'warning'
+                  : 'danger'
+              "
+              disable-transitions
+              effect="dark"
+              >{{ scope.row.status }}</el-tag
+            >
+          </template>
+        </el-table-column>
+        <el-table-column
+          :prop="v.prop"
+          :label="v.label"
+          :min-width="v.minwidth"
+          :align="v.align"
+          :key="k"
+          v-else-if="k == 5"
+        >
+          <template slot-scope="scope">
+            <el-button type="primary" @click="showDetail()">详情</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :prop="v.prop"
+          :label="v.label"
+          :min-width="v.minwidth"
+          :align="v.align"
+          :key="k"
+          v-else
+        >
+        </el-table-column>
+      </template>
     </el-table>
     <!-- 页数跳转 -->
     <MyPage :pageData.sync="tableNewData" @getTableData="getTableData" />
-    <MyDialog :dialogVisible.sync="dialogVisible" />
+    <MyDialog
+      :dialogVisible.sync="dialogVisible"
+      :columnTitle.sync="detailColumnTitle"
+      :dialogType.sync="dialogType"
+      :dialogData="dialogData"
+    />
   </div>
 </template>
 

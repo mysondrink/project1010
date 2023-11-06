@@ -8,14 +8,6 @@
   min-height: 800px;
 }
 
-.pageItem .el-pagination {
-  position: absolute;
-  height: 50px;
-  top: 800px;
-  right: 0;
-  font-size: 18px;
-}
-
 .el-table {
   font-size: 18px;
   font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;

@@ -15,6 +15,72 @@ export default {
             searchItem: {
                 controller_type: "轨道",
             },
+            dialogData: [
+                {
+                    sample_id: 1,
+                    create_time: "2023",
+                    user: "李",
+                    sample_status: "充电",
+                },
+                {
+                    sample_id: 2,
+                    create_time: "2023",
+                    user: "123",
+                    sample_status: "充电",
+                },
+                {
+                    sample_id: 3,
+                    create_time: "2023",
+                    user: "李",
+                    sample_status: "充电",
+                },
+                {
+                    sample_id: 4,
+                    create_time: "2023",
+                    user: "李",
+                    sample_status: "运输",
+                },
+                {
+                    sample_id: 5,
+                    create_time: "2023",
+                    user: "李",
+                    sample_status: "充电",
+                },
+                {
+                    sample_id: 1,
+                    create_time: "2023",
+                    user: "李",
+                    sample_status: "充电",
+                },
+            ],
+            detailColumnTitle: [
+                {
+                    prop: "sample_id",
+                    label: "样本编号",
+                    align: "center",
+                },
+                {
+                    prop: "create_time",
+                    label: "下发时间",
+                    align: "center",
+                },
+                {
+                    prop: "user",
+                    label: "操作人",
+                    align: "center",
+                },
+                {
+                    prop: "sample_status",
+                    label: "状态",
+                    align: "center",
+                },
+                {
+                    prop: "malt",
+                    label: "操作",
+                    align: "center",
+                },
+            ],
+            dialogType: 5,
             columnTitle: [
                 {
                     prop: "controller_type",
@@ -37,6 +103,18 @@ export default {
                 {
                     prop: "trail_type",
                     label: "名称",
+                    minwidth: "180",
+                    align: "center",
+                },
+                {
+                    prop: "status",
+                    label: "状态",
+                    minwidth: "180",
+                    align: "center",
+                },
+                {
+                    prop: "detail",
+                    label: "详情",
                     minwidth: "180",
                     align: "center",
                 },

@@ -18,42 +18,56 @@
         <el-form-item label="状态">
           <el-select v-model="inputStatus" placeholder="状态">
             <el-option label="充电" value="充电"></el-option>
-            <el-option label="传输" value="传输"></el-option>
+            <el-option label="运输" value="运输"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-
-      <el-table :data="dialogNewData" height="100%">
-        <el-table-column
-          property="sample_id"
-          label="样本编号"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          property="create_time"
-          label="下发时间"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          property="user"
-          label="操作人"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          property="sample_status"
-          label="状态"
-          align="center"
-        ></el-table-column>
-        <el-table-column property="detail" label="操作" align="center">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text"
-              >取消</el-button
+      <template v-if="dialogType == 5">
+        <el-table :data="dialogNewData" height="100%">
+          <template v-for="(v, k) in columnTitle">
+            <el-table-column
+              :prop="v.prop"
+              :label="v.label"
+              :min-width="v.minwidth"
+              :align="v.align"
+              :key="k"
+              v-if="k == 4"
             >
+              <template slot-scope="scope">
+                <el-button @click="handleClick(scope.row)" type="text"
+                  >取消</el-button
+                >
+              </template>
+            </el-table-column>
+            <el-table-column
+              :prop="v.prop"
+              :label="v.label"
+              :min-width="v.minwidth"
+              :align="v.align"
+              :key="k"
+              v-else
+            >
+            </el-table-column>
           </template>
-        </el-table-column>
-      </el-table>
+        </el-table>
+      </template>
+      <template v-else>
+        <el-table :data="dialogNewData" height="100%">
+          <template v-for="(v, k) in columnTitle">
+            <el-table-column
+              :prop="v.prop"
+              :label="v.label"
+              :min-width="v.minwidth"
+              :align="v.align"
+              :key="k"
+            >
+            </el-table-column>
+          </template>
+        </el-table>
+      </template>
       <span slot="footer" class="dialog-footer" align="center">
-        <el-pagination class="pagination"
+        <el-pagination
+          class="pagination"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"

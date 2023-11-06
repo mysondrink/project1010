@@ -1,3 +1,6 @@
+import { mapActions } from "vuex";
+import MyDialog from "@/components/dialog/index.vue";
+import MyPage from "@/components/pagination/index.vue";
 
 export default {
   data() {
@@ -6,53 +9,224 @@ export default {
         user: "",
         region: "",
       },
-      tableData: [
+      tableNewData: [],
+      tableData: [], //展示数据
+      tableOri: [], //原始数据
+      dialogVisible: false,
+      searchItem: {
+        controller_type: "轨道",
+      },
+      dialogData: [
         {
-          ctype: "轨道",
-          mtype: "-",
-          id: "Rail-1",
-          ttype: "TCP/IP",
-          telec: "common",
-          receive: "common",
-          rate: "2%",
-          detail: "详情",
+          sample_id: 1,
+          create_time: "2023",
+          sample_status: "充电",
+          rates: "1%",
         },
         {
-          ctype: "轨道",
-          mtype: "-",
-          id: "Rail-1",
-          ttype: "TCP/IP",
-          telec: "common",
-          receive: "common",
-          rate: "2%",
-          detail: "详情",
+          sample_id: 2,
+          create_time: "2023",
+          sample_status: "充电",
+          rates: "2%",
         },
         {
-          ctype: "轨道",
-          mtype: "-",
-          id: "Rail-1",
-          ttype: "TCP/IP",
-          telec: "common",
-          receive: "common",
-          rate: "2%",
-          detail: "详情",
+          sample_id: 3,
+          create_time: "2023",
+          sample_status: "传输",
+          rates: "1%",
+        },
+        {
+          sample_id: 4,
+          create_time: "2023",
+          sample_status: "充电",
+          rates: "3%",
+        },
+        {
+          sample_id: 3,
+          create_time: "2023",
+          sample_status: "传输",
+          rates: "1%",
+        },
+        {
+          sample_id: 4,
+          create_time: "2023",
+          sample_status: "充电",
+          rates: "3%",
+        },
+        {
+          sample_id: 3,
+          create_time: "2023",
+          sample_status: "传输",
+          rates: "1%",
+        },
+        {
+          sample_id: 4,
+          create_time: "2023",
+          sample_status: "充电",
+          rates: "3%",
         },
       ],
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
+      detailColumnTitle: [
+        {
+          prop: "sample_id",
+          label: "样本编号",
+          align: "center",
+        },
+        {
+          prop: "create_time",
+          label: "下发时间",
+          align: "center",
+        },
+        
+        {
+          prop: "sample_status",
+          label: "状态",
+          align: "center",
+        },
+        {
+          prop: "rates",
+          label: "丢包率",
+          align: "center",
+        },
+      ],
+      dialogType: 4,
+      columnTitle: [
+        {
+          prop: "controller_type",
+          label: "控制器类型",
+          minwidth: "180",
+          align: "center",
+        },
+        {
+          prop: "module_type",
+          label: "模块类型",
+          minwidth: "180",
+          align: "center",
+        },
+        {
+          prop: "controller_id",
+          label: "ID号",
+          minwidth: "180",
+          align: "center",
+        },
+        {
+          prop: "ttype",
+          label: "通信方式",
+          minwidth: "180",
+          align: "center",
+        },
+        {
+          prop: "tx_status",
+          label: "TX状态",
+          minwidth: "180",
+          align: "center",
+        },
+        {
+          prop: "rx_status",
+          label: "RX状态",
+          minwidth: "180",
+          align: "center",
+        },
+        {
+          prop: "rates",
+          label: "丢包率",
+          minwidth: "180",
+          align: "center",
+        },
+        {
+          prop: "detail",
+          label: "详情",
+          minwidth: "180",
+          align: "center",
+        },
+      ],
+      currentPage: 1,
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    ...mapActions("userModule", { trailTable: "trailinfo" }),
+    submitSearch() {
+      if (this.formInline.trail_type != "" && this.formInline.status != "") {
+        // 查询名称和状态
+        this.tableData = this.tableOri.filter((item) => {
+          if (
+            item.trail_type == this.formInline.trail_type &&
+            item.status == this.formInline.status
+          ) {
+            return item;
+          }
+        });
+      } else if (this.formInline.status != "") {
+        // 只查询状态
+        this.tableData = this.tableOri.filter((item) => {
+          if (item.status == this.formInline.status) {
+            return item;
+          }
+        });
+      } else if (this.formInline.trail_type != "") {
+        // 只查询名称
+        this.tableData = this.tableOri.filter((item) => {
+          if (item.trail_type == this.formInline.trail_type) {
+            return item;
+          }
+        });
+      } else {
+        return;
+      }
+      this.tableNewData = this.tableData;
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    clearSearch() {
+      this.formInline.trail_type = "";
+      this.formInline.status = "";
+      this.tableNewData = this.tableOri;
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+    getTable() {
+      this.trailTable(this.searchItem)
+        .then((res) => {
+          if (res.data.code == "200" && res.data.data.data != null) {
+            this.checkData(res.data.data.data);
+          }
+        })
+        .catch((err) => {
+          console.log("err: ", err.response.data.msg);
+        });
     },
+    // 将状态转为汉字
+    checkData(data) {
+      for (let index = 0; index < data.length; index++) {
+        if (data[index].status === "success") {
+          data[index].status = "正常";
+        } else if (data[index.status] == "warning") {
+          data[index].status = "警告";
+        } else {
+          data[index].status = "错误";
+        }
+        data[index].sum = data[index].charge_area + data[index].trans_area;
+        data[index].module_type = "-";
+      }
+      this.tableOri = data;
+      this.tableData = this.tableOri;
+      //   this.tableNewData = data;
+      for (let index = 0; index < 100; index++) {
+        this.tableData.push(data[1]);
+      }
+      this.tableNewData = this.tableData;
+    },
+    showDetail() {
+      console.log("detail!");
+      this.dialogVisible = true;
+      // this.dialogNewData = this.dialogData;
+    },
+    getTableData(val) {
+      // console.log(val);
+      this.tableData = val;
+    },
+  },
+  mounted() {
+    this.getTable();
+  },
+  components: {
+    MyDialog,
+    MyPage,
   },
 };

@@ -1,4 +1,3 @@
-import pagination from '../pagination/index.vue';
 
 export default {
   name: "MyDialog",
@@ -7,45 +6,8 @@ export default {
       visible: false,
       inputId: null,
       inputStatus: "",
-      dialogData: [
-        {
-          sample_id: 1,
-          create_time: "2023",
-          user: "李",
-          sample_status: "充电",
-        },
-        {
-          sample_id: 2,
-          create_time: "2023",
-          user: "123",
-          sample_status: "充电",
-        },
-        {
-          sample_id: 3,
-          create_time: "2023",
-          user: "李",
-          sample_status: "充电",
-        },
-        {
-          sample_id: 4,
-          create_time: "2023",
-          user: "李",
-          sample_status: "充电",
-        },
-        {
-          sample_id: 5,
-          create_time: "2023",
-          user: "李",
-          sample_status: "充电",
-        },
-        {
-          sample_id: 6,
-          create_time: "2023",
-          user: "李",
-          sample_status: "充电",
-        },
-      ],
-      dialogNewData: [],
+      // dialogData: [], // 接收到的数据
+      dialogNewData: [], //展示数据
       currentPage: 1,
       PagaSize: 5,
       PageLength: null,
@@ -55,6 +17,15 @@ export default {
   props: {
     dialogVisible: {
       default: false,
+    },
+    columnTitle: {
+      default: null,
+    },
+    dialogType: {
+      default: null,
+    },
+    dialogData: {
+      default: null,
     },
   },
   methods: {
@@ -73,6 +44,8 @@ export default {
       });
     },
     dialogClose() {
+      this.inputStatus = null;
+      this.inputId = null;
       this.$emit("update:dialogVisible", false);
     },
     handleClick(row) {
@@ -106,7 +79,6 @@ export default {
       // this.dialogNewData = this.dialogData;
       this.totalData = this.dialogNewData.length;
       this.PageLength = Math.ceil(this.totalData / this.PagaSize);
-      this.handleCurrentChange(1);
     },
   },
   // dialog监听输入框
@@ -133,11 +105,16 @@ export default {
       this.dialogNewData = this.dialogData;
 
       this.checkData();
+      // this.handleCurrentChange(1);
+
+    },
+    // 重新赋值，不然浏览器报错
+    dialogData: function () {
+      this.dialogData = this.dialogData;
     },
   },
-  mounted() {},
+  mounted() { },
   components: {
-    pagination,
   },
 };
 
