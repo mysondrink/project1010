@@ -1,20 +1,21 @@
+import MyPage from "@/components/pagination/index.vue"
+import MyDialog from "@/components/dialog/index.vue"
 import { mapActions } from "vuex";
-import MyDialog from "@/components/dialog/index.vue";
-import MyPage from "@/components/pagination/index.vue";
 export default {
     data() {
         return {
             formInline: {
-                trail_type: "",
-                status: "",
+                user: "",
+                region: "",
             },
             PageSize: null,
             tableNewData: [],
             tableData: [], //展示数据
             tableOri: [], //原始数据
             dialogVisible: false,
+            currentPage: 1,
             searchItem: {
-                controller_type: "轨道",
+                controller_type: "模块",
             },
             dialogData: [
                 {
@@ -84,12 +85,6 @@ export default {
             dialogType: 5,
             columnTitle: [
                 {
-                    prop: "controller_type",
-                    label: "控制器类型",
-                    minwidth: "180",
-                    align: "center",
-                },
-                {
                     prop: "module_type",
                     label: "模块类型",
                     minwidth: "180",
@@ -102,8 +97,20 @@ export default {
                     align: "center",
                 },
                 {
-                    prop: "trail_type",
-                    label: "名称",
+                    prop: "waste_rates",
+                    label: "垃圾容量",
+                    minwidth: "180",
+                    align: "center",
+                },
+                {
+                    prop: "sum",
+                    label: "试剂容量",
+                    minwidth: "180",
+                    align: "center",
+                },
+                {
+                    prop: "end_time",
+                    label: "剩余时间",
                     minwidth: "180",
                     align: "center",
                 },
@@ -120,16 +127,17 @@ export default {
                     align: "center",
                 },
             ],
+
         };
     },
     methods: {
-        ...mapActions("userModule", { trailTable: "trailinfo" }),
+        ...mapActions("userModule", { moduleTable: "moduleinfo" }),
         submitSearch() {
-            if (this.formInline.trail_type != "" && this.formInline.status != "") {
+            if (this.formInline.module_type != "" && this.formInline.status != "") {
                 // 查询名称和状态
                 this.tableData = this.tableOri.filter((item) => {
                     if (
-                        item.trail_type == this.formInline.trail_type &&
+                        item.module_type == this.formInline.module_type &&
                         item.status == this.formInline.status
                     ) {
                         return item;
@@ -142,10 +150,10 @@ export default {
                         return item;
                     }
                 });
-            } else if (this.formInline.trail_type != "") {
+            } else if (this.formInline.module_type != "") {
                 // 只查询名称
                 this.tableData = this.tableOri.filter((item) => {
-                    if (item.trail_type == this.formInline.trail_type) {
+                    if (item.module_type == this.formInline.module_type) {
                         return item;
                     }
                 });
@@ -155,12 +163,12 @@ export default {
             this.tableNewData = this.tableData;
         },
         clearSearch() {
-            this.formInline.trail_type = "";
+            this.formInline.module_type = "";
             this.formInline.status = "";
             this.tableNewData = this.tableOri;
         },
         getTable() {
-            this.trailTable(this.searchItem)
+            this.moduleTable(this.searchItem)
                 .then((res) => {
                     if (res.data.code == "200" && res.data.data.data != null) {
                         this.checkData(res.data.data.data);
@@ -181,7 +189,7 @@ export default {
                     data[index].status = "错误";
                 }
                 data[index].sum = data[index].charge_area + data[index].trans_area;
-                data[index].module_type = "-";
+                // data[index].module_type = "-";
             }
             this.tableOri = data;
             this.tableData = this.tableOri;

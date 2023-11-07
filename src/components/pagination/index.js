@@ -1,11 +1,10 @@
 export default {
   data() {
     return {
-      tableOri: [],
+      tableOri: [], //接收到的数据
       tableData: [], //原始数据
-      tableNewData: [], //添加的数据
+      tableNewData: [], //展示的数据
       currentPage: 1,
-      PagaSize: 10,
       PageLength: null,
       totalData: null,
     };
@@ -14,65 +13,34 @@ export default {
     pageData: {
       defualt: null,
     },
+    PageSize: {
+      default: 5,
+    },
   },
   methods: {
-    submitSearch() {
-      if (this.formInline.trail_type != "" && this.formInline.status != "") {
-        // 查询名称和状态
-        this.tableData = this.tableData.filter((item) => {
-          if (
-            item.trail_type == this.formInline.trail_type &&
-            item.status == this.formInline.status
-          ) {
-            return item;
-          }
-        });
-      } else if (this.formInline.status != "") {
-        // 只查询状态
-        this.tableData = this.tableData.filter((item) => {
-          if (item.status == this.formInline.status) {
-            return item;
-          }
-        });
-      } else if (this.formInline.trail_type != "") {
-        // 只查询名称
-        this.tableData = this.tableData.filter((item) => {
-          if (item.trail_type == this.formInline.trail_type) {
-            return item;
-          }
-        });
-      } else {
-        return;
-      }
-      this.setPage();
-    },
-    clearSearch() {
-      this.formInline.trail_type = "";
-      this.formInline.status = "";
-      this.tableData = this.tableOri;
-      this.setPage();
-    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
 
     handleCurrentChange(val) {
       let tableNewData = [];
-      let num = this.PagaSize * (val - 1);
-      let temp = this.PagaSize;
+      let num = this.PageSize * (val - 1);
+      let temp = this.PageSize;
       if (this.totalData - num < temp) {
         temp = this.totalData - num;
       }
+
       for (let index = 0; index < temp; index++) {
         tableNewData.push(this.tableData[num + index]);
       }
       this.tableNewData = tableNewData;
+      console.log(tableNewData);
       this.$emit("getTableData", this.tableNewData);
       console.log(`当前页: ${val}`);
     },
     setPage() {
       this.totalData = this.tableData.length;
-      this.PageLength = Math.ceil(this.totalData / this.PagaSize);
+      this.PageLength = Math.ceil(this.totalData / this.PageSize);
       this.handleCurrentChange(1);
     },
   },
@@ -80,6 +48,7 @@ export default {
   components: {},
   watch: {
     pageData: function () {
+      console.log(this.PageSize);
       this.tableOri = this.pageData;
       this.tableData = this.tableOri;
       this.setPage();

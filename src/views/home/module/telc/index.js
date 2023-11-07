@@ -1,57 +1,70 @@
 import { mapActions } from "vuex";
 import MyDialog from "@/components/dialog/index.vue";
 import MyPage from "@/components/pagination/index.vue";
+
 export default {
     data() {
         return {
             formInline: {
-                trail_type: "",
+                module_type: "",
                 status: "",
             },
-            PageSize: null,
             tableNewData: [],
             tableData: [], //展示数据
             tableOri: [], //原始数据
             dialogVisible: false,
+            PageSize: null,
             searchItem: {
-                controller_type: "轨道",
+                controller_type: "模块",
             },
             dialogData: [
                 {
                     sample_id: 1,
                     create_time: "2023",
-                    user: "李",
                     sample_status: "充电",
+                    rates: "1%",
                 },
                 {
                     sample_id: 2,
                     create_time: "2023",
-                    user: "123",
                     sample_status: "充电",
+                    rates: "2%",
                 },
                 {
                     sample_id: 3,
                     create_time: "2023",
-                    user: "李",
-                    sample_status: "充电",
+                    sample_status: "运输",
+                    rates: "1%",
                 },
                 {
                     sample_id: 4,
                     create_time: "2023",
-                    user: "李",
+                    sample_status: "充电",
+                    rates: "3%",
+                },
+                {
+                    sample_id: 3,
+                    create_time: "2023",
                     sample_status: "运输",
+                    rates: "1%",
                 },
                 {
-                    sample_id: 5,
+                    sample_id: 4,
                     create_time: "2023",
-                    user: "李",
                     sample_status: "充电",
+                    rates: "3%",
                 },
                 {
-                    sample_id: 1,
+                    sample_id: 3,
                     create_time: "2023",
-                    user: "李",
+                    sample_status: "传输",
+                    rates: "1%",
+                },
+                {
+                    sample_id: 4,
+                    create_time: "2023",
                     sample_status: "充电",
+                    rates: "3%",
                 },
             ],
             detailColumnTitle: [
@@ -65,30 +78,20 @@ export default {
                     label: "下发时间",
                     align: "center",
                 },
-                {
-                    prop: "user",
-                    label: "操作人",
-                    align: "center",
-                },
+
                 {
                     prop: "sample_status",
                     label: "状态",
                     align: "center",
                 },
                 {
-                    prop: "malt",
-                    label: "操作",
+                    prop: "rates",
+                    label: "丢包率",
                     align: "center",
                 },
             ],
-            dialogType: 5,
+            dialogType: 4,
             columnTitle: [
-                {
-                    prop: "controller_type",
-                    label: "控制器类型",
-                    minwidth: "180",
-                    align: "center",
-                },
                 {
                     prop: "module_type",
                     label: "模块类型",
@@ -102,14 +105,26 @@ export default {
                     align: "center",
                 },
                 {
-                    prop: "trail_type",
-                    label: "名称",
+                    prop: "ttype",
+                    label: "通信方式",
                     minwidth: "180",
                     align: "center",
                 },
                 {
-                    prop: "status",
-                    label: "状态",
+                    prop: "tx_status",
+                    label: "TX状态",
+                    minwidth: "180",
+                    align: "center",
+                },
+                {
+                    prop: "rx_status",
+                    label: "RX状态",
+                    minwidth: "180",
+                    align: "center",
+                },
+                {
+                    prop: "rates",
+                    label: "丢包率",
                     minwidth: "180",
                     align: "center",
                 },
@@ -120,16 +135,17 @@ export default {
                     align: "center",
                 },
             ],
+            currentPage: 1,
         };
     },
     methods: {
-        ...mapActions("userModule", { trailTable: "trailinfo" }),
+        ...mapActions("userModule", { moduleTable: "moduleinfo" }),
         submitSearch() {
-            if (this.formInline.trail_type != "" && this.formInline.status != "") {
+            if (this.formInline.module_type != "" && this.formInline.status != "") {
                 // 查询名称和状态
                 this.tableData = this.tableOri.filter((item) => {
                     if (
-                        item.trail_type == this.formInline.trail_type &&
+                        item.module_type == this.formInline.module_type &&
                         item.status == this.formInline.status
                     ) {
                         return item;
@@ -142,10 +158,10 @@ export default {
                         return item;
                     }
                 });
-            } else if (this.formInline.trail_type != "") {
+            } else if (this.formInline.module_type != "") {
                 // 只查询名称
                 this.tableData = this.tableOri.filter((item) => {
-                    if (item.trail_type == this.formInline.trail_type) {
+                    if (item.module_type == this.formInline.module_type) {
                         return item;
                     }
                 });
@@ -155,12 +171,12 @@ export default {
             this.tableNewData = this.tableData;
         },
         clearSearch() {
-            this.formInline.trail_type = "";
+            this.formInline.module_type = "";
             this.formInline.status = "";
             this.tableNewData = this.tableOri;
         },
         getTable() {
-            this.trailTable(this.searchItem)
+            this.moduleTable(this.searchItem)
                 .then((res) => {
                     if (res.data.code == "200" && res.data.data.data != null) {
                         this.checkData(res.data.data.data);
@@ -181,7 +197,7 @@ export default {
                     data[index].status = "错误";
                 }
                 data[index].sum = data[index].charge_area + data[index].trans_area;
-                data[index].module_type = "-";
+                // data[index].module_type = "-";
             }
             this.tableOri = data;
             this.tableData = this.tableOri;
@@ -197,7 +213,6 @@ export default {
             // this.dialogNewData = this.dialogData;
         },
         getTableData(val) {
-            // console.log(val);
             this.tableData = val;
         },
     },

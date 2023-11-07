@@ -12,6 +12,7 @@ export default {
       PagaSize: 5,
       PageLength: null,
       totalData: null,
+      PageSize: null,
     };
   },
   props: {
@@ -46,7 +47,11 @@ export default {
     dialogClose() {
       this.inputStatus = null;
       this.inputId = null;
-      this.$emit("update:dialogVisible", false);
+      this.tableData = [],
+        // currentPage: 1,
+        // PageLength: null,
+        // totalData: null,
+        this.$emit("update:dialogVisible", false);
     },
     handleClick(row) {
       console.log(row);
@@ -62,7 +67,6 @@ export default {
       if (this.totalData - num < temp) {
         temp = this.totalData - num;
       }
-      console.log(temp);
       for (let index = 0; index < temp; index++) {
         this.dialogNewData.push(this.dialogData[num + index]);
       }
@@ -86,27 +90,43 @@ export default {
     inputId: function (val) {
       if (val == "") {
         this.dialogNewData = this.dialogData;
+        this.checkData();
+        this.handleCurrentChange(1);
       } else {
         this.dialogNewData = this.searchId(val);
+        if (this.inputStatus != null && this.inputStatus != "") {
+          this.dialogNewData = this.dialogNewData.filter((item) => {
+            if (item.sample_status == this.inputStatus) {
+              return item;
+            }
+          });
+        }
+        this.checkData();
       }
-      this.checkData();
     },
     inputStatus: function (val) {
       if (val == "") {
         this.dialogNewData = this.dialogData;
+        this.checkData();
+        this.handleCurrentChange(1);
       } else {
         this.dialogNewData = this.searchStatus(val);
+        if (this.inputId != null && this.inputId != "") {
+          this.dialogNewData = this.dialogNewData.filter((item) => {
+            if (item.sample_id == this.inputId) {
+              return item;
+            }
+          });
+        }
+        this.checkData();
       }
-      this.checkData();
     },
     dialogVisible: function () {
-      console.log(this.dialogVisible);
       this.visible = this.dialogVisible;
       this.dialogNewData = this.dialogData;
 
       this.checkData();
-      // this.handleCurrentChange(1);
-
+      this.handleCurrentChange(1);
     },
     // 重新赋值，不然浏览器报错
     dialogData: function () {

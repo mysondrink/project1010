@@ -6,13 +6,14 @@ export default {
   data() {
     return {
       formInline: {
-        user: "",
-        region: "",
+        trail_type: "",
+        status: "",
       },
       tableNewData: [],
       tableData: [], //展示数据
       tableOri: [], //原始数据
       dialogVisible: false,
+      PageSize: 10,
       searchItem: {
         controller_type: "轨道",
       },
@@ -32,7 +33,7 @@ export default {
         {
           sample_id: 3,
           create_time: "2023",
-          sample_status: "传输",
+          sample_status: "运输",
           rates: "1%",
         },
         {
@@ -44,7 +45,7 @@ export default {
         {
           sample_id: 3,
           create_time: "2023",
-          sample_status: "传输",
+          sample_status: "运输",
           rates: "1%",
         },
         {
@@ -140,7 +141,7 @@ export default {
           align: "center",
         },
       ],
-      currentPage: 1,
+      // currentPage: 1,
     };
   },
   methods: {
@@ -218,7 +219,6 @@ export default {
       // this.dialogNewData = this.dialogData;
     },
     getTableData(val) {
-      // console.log(val);
       this.tableData = val;
     },
   },

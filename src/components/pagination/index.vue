@@ -5,8 +5,8 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
+      :page-size="PageSize"
       :page-sizes="[10]"
-      :page-size="PagaSize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="totalData"
     >

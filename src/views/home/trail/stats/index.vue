@@ -80,7 +80,11 @@
       </template>
     </el-table>
     <!-- 页数跳转 -->
-    <MyPage :pageData.sync="tableNewData" @getTableData="getTableData" />
+    <MyPage
+      :pageData.sync="tableNewData"
+      :PageSize.sync="PageSize"
+      @getTableData="getTableData"
+    />
     <MyDialog
       :dialogVisible.sync="dialogVisible"
       :columnTitle.sync="detailColumnTitle"

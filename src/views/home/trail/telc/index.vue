@@ -2,7 +2,10 @@
   <div class="main">
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
       <el-form-item label="轨道名称">
-        <el-input v-model="formInline.user" placeholder="请输入内容"></el-input>
+        <el-input
+          v-model="formInline.trail_type"
+          placeholder="请输入内容"
+        ></el-input>
       </el-form-item>
       <el-form-item label="状态">
         <el-select v-model="formInline.status" placeholder="状态">
@@ -50,7 +53,18 @@
           v-else-if="k == 4"
         >
           <template slot-scope="scope">
-            <el-tag type="success" effect="dark">正常</el-tag>
+            <el-tag
+              :type="
+                scope.row.status === '正常'
+                  ? 'success'
+                  : scope.row.status === '警告'
+                  ? 'warning'
+                  : 'danger'
+              "
+              disable-transitions
+              effect="dark"
+              >{{ scope.row.status }}</el-tag
+            >
           </template>
         </el-table-column>
 
@@ -63,7 +77,18 @@
           v-else-if="k == 5"
         >
           <template slot-scope="scope">
-            <el-tag type="success" effect="dark">正常</el-tag>
+            <el-tag
+              :type="
+                scope.row.status === '正常'
+                  ? 'success'
+                  : scope.row.status === '警告'
+                  ? 'warning'
+                  : 'danger'
+              "
+              disable-transitions
+              effect="dark"
+              >{{ scope.row.status }}</el-tag
+            >
           </template>
         </el-table-column>
 
@@ -92,7 +117,11 @@
       </template>
     </el-table>
     <!-- 页数跳转 -->
-    <MyPage :pageData.sync="tableNewData" @getTableData="getTableData" />
+    <MyPage
+      :pageData.sync="tableNewData"
+      :PageSize.sync="PageSize"
+      @getTableData="getTableData"
+    />
     <MyDialog
       :dialogVisible.sync="dialogVisible"
       :columnTitle.sync="detailColumnTitle"

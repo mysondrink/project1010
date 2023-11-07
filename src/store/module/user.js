@@ -75,6 +75,16 @@ const userModule = {
                 });
             });
         },
+        // 模块请求
+        moduleinfo(context, { controller_type }) {
+            return new Promise((resolve, reject) => {
+                userService.moduleinfo({ controller_type }).then((res) => {
+                    resolve(res);
+                }).catch((err) => {
+                    reject(err);
+                });
+            });
+        },
     },
 };
 export default userModule;

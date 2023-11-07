@@ -1,0 +1,15 @@
+.main {
+    position: relative;
+    background-color: #ffffff;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    min-height: 800px;
+}
+
+.canvas {
+    position: absolute;
+    left: 300px;
+    overflow: scroll;
+}

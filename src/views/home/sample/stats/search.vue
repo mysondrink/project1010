@@ -6,7 +6,7 @@
           :inline="true"
           :model="formInline"
           class="demo-form-inline"
-          label-width="80px"
+          label-width="100px"
         >
           <el-form-item label="样本编号">
             <el-input
@@ -23,7 +23,7 @@
           :inline="true"
           :model="formInline"
           class="demo-form-inline"
-          label-width="80px"
+          label-width="100px"
         >
           <el-form-item label="条形码">
             <el-input
@@ -62,7 +62,7 @@ export default {
 <style>
 .bg {
   width: 25%;
-  min-width: 400px;
+  min-width: 480px;
   height: 35%;
   min-height: 130px;
   position: relative;

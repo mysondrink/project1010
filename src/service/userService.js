@@ -20,9 +20,15 @@ const trailinfo = ({ controller_type }) => {
     return request.get('trail/info', { params: { Controller_type: controller_type } });
 };
 
+// 模块
+const moduleinfo = ({ controller_type }) => {
+    return request.get('module/info', { params: { Controller_type: controller_type } });
+};
+
 export default {
     register,
     info,
     login,
     trailinfo,
+    moduleinfo
 }
