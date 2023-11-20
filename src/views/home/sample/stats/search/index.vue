@@ -41,65 +41,12 @@
 </template>
 
 <script scoped>
+import indexjs from "./index.js";
 export default {
-  data() {
-    return {
-      formInline: {
-        num: "",
-        code: "",
-      },
-    };
-  },
-  methods: {
-    onSubmit() {
-      console.log("submit!");
-      this.$router.push("/sample/stats");
-    },
-  },
-};
+  ...indexjs,
+}
 </script>
 
 <style>
-.bg {
-  width: 25%;
-  min-width: 480px;
-  height: 35%;
-  min-height: 130px;
-  position: relative;
-  top: 100px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  border-radius: 4px 4px 4px 4px;
-  opacity: 1;
-  border: 10px;
-  border: 1px solid #000000;
-}
-
-.form {
-  width: 90%;
-  height: 90%;
-  position: relative;
-  top: 10px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-}
-
-.form .el-button {
-  position: absolute;
-  left: 0;
-}
-
-.main {
-  position: relative;
-  background-color: #ffffff;
-  padding-top: 10px;
-  padding-bottom: 40px;
-  padding-left: 40px;
-  padding-right: 40px;
-  min-height: 800px;
-}
+@import "./index.css";
 </style>

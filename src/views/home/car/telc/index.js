@@ -1,23 +1,21 @@
-import MyPage from "@/components/pagination/index.vue"
-import MyDialog from "@/components/dialog/index.vue"
+import MyDialog from "@/components/dialog/index.vue";
+import MyPage from "@/components/pagination/index.vue";
 import { mapActions } from "vuex";
 export default {
     data() {
         return {
             formInline: {
-                user: "",
-                region: "",
+                car_id: "",
             },
             PageSize: null,
-            tableNewData: [],
+            tableNewData: [], //过滤后数据，包括分页、查询
             tableData: [], //展示数据
             tableOri: [], //原始数据
             dialogVisible: false,
-            currentPage: 1,
             searchItem: {
-                controller_type: "模块",
+                controller_type: "轨道",
             },
-            dialogTitle: "模块详情",
+            dialogTitle: "队列详情",
             dialogData: [
                 {
                     sample_id: 1,
@@ -83,41 +81,30 @@ export default {
                     align: "center",
                 },
             ],
+            tableOri: [],
             dialogType: 5,
             columnTitle: [
                 {
-                    prop: "module_type",
+                    prop: "controller_id",
                     label: "模块类型",
                     minwidth: "180",
                     align: "center",
                 },
                 {
-                    prop: "controller_id",
-                    label: "ID号",
+                    prop: "target",
+                    label: "等待队列(C)",
                     minwidth: "180",
                     align: "center",
                 },
                 {
-                    prop: "waste_rates",
-                    label: "垃圾容量",
+                    prop: "w_sum",
+                    label: "长度",
                     minwidth: "180",
                     align: "center",
                 },
                 {
-                    prop: "sum",
-                    label: "试剂容量",
-                    minwidth: "180",
-                    align: "center",
-                },
-                {
-                    prop: "end_time",
-                    label: "剩余时间",
-                    minwidth: "180",
-                    align: "center",
-                },
-                {
-                    prop: "status",
-                    label: "状态",
+                    prop: "car_id",
+                    label: "等待队列的运输车",
                     minwidth: "180",
                     align: "center",
                 },
@@ -128,37 +115,43 @@ export default {
                     align: "center",
                 },
             ],
-
         };
     },
     methods: {
-        ...mapActions("userModule", { moduleTable: "moduleinfo" }),
+        ...mapActions("userModule", { carTable: "carinfo" }),
         submitSearch() {
-            if (this.formInline.status != "") {
-                // 只查询状态
-                this.tableData = this.tableOri.filter((item) => {
-                    if (item.status == this.formInline.status) {
-                        return item;
-                    }
-                });
-            };
-            if (this.formInline.module_type != "") {
+            if (this.formInline.car_id != "") {
                 // 只查询名称
-                this.tableData = this.tableOri.filter((item) => {
-                    if (item.module_type == this.formInline.module_type) {
+                this.tableData = this.tableData.filter((item) => {
+                    if (item.car_id == this.formInline.car_id) {
                         return item;
                     }
                 });
-            };
+            }
             this.tableNewData = this.tableData;
         },
         clearSearch() {
-            this.formInline.module_type = "";
-            this.formInline.status = "";
+            this.formInline.car_id = "";
             this.tableNewData = this.tableOri;
         },
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+        },
+        getTableData(val) {
+            // console.log(val);
+            this.tableData = val;
+        },
+        showDetail() {
+            console.log("detail!");
+            this.dialogVisible = true;
+            // this.dialogNewData = this.dialogData;
+        },
+        // 发送请求
         getTable() {
-            this.moduleTable(this.searchItem)
+            this.carTable()
                 .then((res) => {
                     if (res.data.code == "200" && res.data.data.data != null) {
                         this.checkData(res.data.data.data);
@@ -171,21 +164,19 @@ export default {
         },
         // 将状态转为汉字
         checkData(data) {
+            let targetList = []
             for (let index = 0; index < data.length; index++) {
                 switch (data[index].status) {
-                    case "success":
-                        data[index].status = "正常";
+                    case "charge":
+                        data[index].car_status = "正在充电";
                         break;
-                    case "warning":
-                        data[index].status = "警告";
-                        break;
-                    case "danger":
-                        data[index].status = "错误";
+                    case "trans":
+                        data[index].car_status = "正在运输";
                         break;
                 }
-                data[index].sum = data[index].charge_area + data[index].trans_area;
-                // data[index].module_type = "-";
+                targetList.push(data[index].target)
             }
+            this.targetList = [...new Set(targetList)];
             this.tableOri = data;
             this.tableData = this.tableOri;
             //   this.tableNewData = data;
@@ -194,19 +185,11 @@ export default {
             }
             this.tableNewData = this.tableData;
         },
-        showDetail() {
-            console.log("detail!");
-            this.dialogVisible = true;
-            // this.dialogNewData = this.dialogData;
-        },
-        getTableData(val) {
-            // console.log(val);
-            this.tableData = val;
-        },
     },
     mounted() {
         this.PageSize = 10;
         this.getTable();
+        // this.tableData = this.tableOri;
     },
     components: {
         MyDialog,

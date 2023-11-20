@@ -1,5 +1,10 @@
 <template>
   <div class="main">
+    <div>
+      <h1>
+        布局
+      </h1>
+    </div>
     <div id="layout">
       <canvas ref="canvas1" class="canvas" width="1100" height="850"></canvas>
       <canvas ref="canvas2" class="canvas" width="1100" height="850"></canvas>

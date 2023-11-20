@@ -141,6 +141,7 @@ export default {
           this.$router.replace("./login");
         })
         .catch((err) => {
+          this.$router.push('/404');
           console.log("err: ", err.response.data.msg);
         });
     },

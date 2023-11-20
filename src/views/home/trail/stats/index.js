@@ -9,13 +9,14 @@ export default {
                 status: "",
             },
             PageSize: null,
-            tableNewData: [],
+            tableNewData: [], //过滤后数据，包括分页、查询
             tableData: [], //展示数据
             tableOri: [], //原始数据
             dialogVisible: false,
             searchItem: {
                 controller_type: "轨道",
             },
+            dialogTitle: "轨道详情",
             dialogData: [
                 {
                     sample_id: 1,
@@ -125,33 +126,22 @@ export default {
     methods: {
         ...mapActions("userModule", { trailTable: "trailinfo" }),
         submitSearch() {
-            if (this.formInline.trail_type != "" && this.formInline.status != "") {
-                // 查询名称和状态
-                this.tableData = this.tableOri.filter((item) => {
-                    if (
-                        item.trail_type == this.formInline.trail_type &&
-                        item.status == this.formInline.status
-                    ) {
-                        return item;
-                    }
-                });
-            } else if (this.formInline.status != "") {
+            if (this.formInline.status != "") {
                 // 只查询状态
-                this.tableData = this.tableOri.filter((item) => {
+                this.tableData = this.tableData.filter((item) => {
                     if (item.status == this.formInline.status) {
                         return item;
                     }
                 });
-            } else if (this.formInline.trail_type != "") {
+            };
+            if (this.formInline.trail_type != "") {
                 // 只查询名称
-                this.tableData = this.tableOri.filter((item) => {
+                this.tableData = this.tableData.filter((item) => {
                     if (item.trail_type == this.formInline.trail_type) {
                         return item;
                     }
                 });
-            } else {
-                return;
-            }
+            };
             this.tableNewData = this.tableData;
         },
         clearSearch() {
@@ -167,18 +157,23 @@ export default {
                     }
                 })
                 .catch((err) => {
+                    this.$router.push('/404');
                     console.log("err: ", err.response.data.msg);
                 });
         },
         // 将状态转为汉字
         checkData(data) {
             for (let index = 0; index < data.length; index++) {
-                if (data[index].status === "success") {
-                    data[index].status = "正常";
-                } else if (data[index.status] == "warning") {
-                    data[index].status = "警告";
-                } else {
-                    data[index].status = "错误";
+                switch (data[index].status) {
+                    case "success":
+                        data[index].status = "正常";
+                        break;
+                    case "warning":
+                        data[index].status = "警告";
+                        break;
+                    case "danger":
+                        data[index].status = "错误";
+                        break;
                 }
                 data[index].sum = data[index].charge_area + data[index].trans_area;
                 data[index].module_type = "-";

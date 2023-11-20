@@ -63,110 +63,12 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      formInline: {
-        user: "",
-        region: "",
-      },
-      tableData: [
-        {
-          num: "29443",
-          code: "696454246465",
-          time2start: "2023-10-24 19:00",
-          stats: "活跃",
-          curpos: "SM-1",
-          tarpos: "IOM",
-          detail: "详情",
-        },
-        {
-          num: "29443",
-          code: "696454246465",
-          time2start: "2023-10-24 19:00",
-          stats: "活跃",
-          curpos: "SM-1",
-          tarpos: "IOM",
-          detail: "详情",
-        },
-        {
-          num: "29443",
-          code: "696454246465",
-          time2start: "2023-10-24 19:00",
-          stats: "活跃",
-          curpos: "SM-1",
-          tarpos: "IOM",
-          detail: "详情",
-        },
-        {
-          num: "29443",
-          code: "696454246465",
-          time2start: "2023-10-24 19:00",
-          stats: "活跃",
-          curpos: "SM-1",
-          tarpos: "IOM",
-          detail: "详情",
-        },
-      ],
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
-    };
-  },
-  methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    },
-  },
-};
+import indexjs from "./index.js";
+export default{
+  ...indexjs,
+}
 </script>
 
 <style scoped>
-.pageItem .el-pagination {
-  position: absolute;
-  height: 50px;
-  top: 800px;
-  right: 0;
-  font-size: 18px;
-}
-
-.el-table {
-  font-size: 18px;
-  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
-  font-weight: 400;
-  text-align: center;
-}
-
-/* 样式穿透 /deep/ or >>> */
-.el-form-item /deep/ .el-form-item__label{
-  font-size: 18px;
-  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
-  font-weight: 400;
-  text-align: center;
-}
-
-.el-input /deep/ .el-input__inner,
-.el-select /deep/ .el-input__inner {
-  font-size: 20px;
-  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
-  font-weight: 400;
-  text-align: center;
-}
-
-.main {
-  position: relative;
-  background-color: #ffffff;
-  padding-top: 10px;
-  padding-bottom: 40px;
-  padding-left: 40px;
-  padding-right: 40px;
-  min-height: 800px;
-}
+@import "./index.css";
 </style>

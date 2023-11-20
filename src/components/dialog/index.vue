@@ -9,7 +9,7 @@
       @close="dialogClose"
     >
       <div slot="title" class="dialog-title">
-        <span class="title-text">轨道详情</span>
+        <span class="title-text">{{ dialogTitle }}</span>
       </div>
       <el-form :inline="true">
         <el-form-item label="样本编号">
@@ -89,6 +89,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 @import "./index.css";
 </style>

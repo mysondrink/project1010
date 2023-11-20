@@ -1,0 +1,25 @@
+.main {
+  position: relative;
+  background-color: #ffffff;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  min-height: 800px;
+}
+
+.table {
+  position: relative;
+  top: 10px;
+  bottom: 10px;
+  padding: 10px;
+  border-radius: 4px 4px 4px 4px;
+  opacity: 1;
+  border: 10px;
+  border: 1px solid #000000;
+}
+
+.el-row {
+  position: relative;
+  top: 20px;
+}

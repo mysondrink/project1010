@@ -1,0 +1,95 @@
+.headerMenu {
+    height: 100px;
+}
+
+.el-col {
+    margin-top: 40px;
+    border-radius: 4px;
+}
+
+/* 样式穿透 /deep/ or >>>
+.toSearch /deep/ .el-input__inner { */
+.toSearch .el-input__inner {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 30px 30px 30px 30px;
+    opacity: 1;
+    border: 1px solid #979797;
+    font-size: 20px;
+}
+
+/* .el-button {
+    background-color: #4285f4;
+    border: none;
+} */
+
+.el-icon-myhome {
+    background-color: #4285f4;
+    border: none;
+}
+
+.el-icon-mes {
+    background-color: #4285f4;
+    border: none;
+}
+
+.el-icon-mymenu {
+    background-color: #4285f4;
+    border: none;
+}
+
+.el-icon-myhome {
+    background: url("@/assets/home-icon.png") center center no-repeat;
+}
+
+.el-icon-myhome:before {
+    content: " ";
+    visibility: hidden;
+}
+
+.el-icon-mymenu {
+    background: url("@/assets/menu-icon.png") center center no-repeat;
+}
+
+.el-icon-mymenu:before {
+    content: " ";
+    visibility: hidden;
+}
+
+.el-icon-mes {
+    background: url("@/assets/mes-icon.png") center center no-repeat;
+}
+
+.el-icon-mes:before {
+    content: " ";
+    visibility: hidden;
+}
+
+.headerMenu {
+    background: #4285f4;
+    border-radius: 0px 0px 0px 0px;
+    opacity: 1;
+}
+
+.avatar-container {
+    margin-right: 30px;
+
+    .avatar-wrapper {
+        margin-top: 5px;
+        position: relative;
+
+        .user-avatar {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        .el-icon-caret-bottom {
+            cursor: pointer;
+            position: absolute;
+            right: -20px;
+            top: 25px;
+            font-size: 12px;
+        }
+    }
+}

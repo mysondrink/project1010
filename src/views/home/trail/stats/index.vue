@@ -90,6 +90,7 @@
       :columnTitle.sync="detailColumnTitle"
       :dialogType.sync="dialogType"
       :dialogData="dialogData"
+      :dialogTitle="dialogTitle"
     />
   </div>
 </template>

@@ -85,6 +85,16 @@ const userModule = {
                 });
             });
         },
+        // 运输车请求
+        carinfo(context) {
+            return new Promise((resolve, reject) => {
+                userService.carinfo().then((res) => {
+                    resolve(res);
+                }).catch((err) => {
+                    reject(err);
+                });
+            });
+        },
     },
 };
 export default userModule;

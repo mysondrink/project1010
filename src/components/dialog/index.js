@@ -28,6 +28,9 @@ export default {
     dialogData: {
       default: null,
     },
+    dialogTitle: {
+      default: null,
+    }
   },
   methods: {
     searchId(val) {

@@ -25,10 +25,16 @@ const moduleinfo = ({ controller_type }) => {
     return request.get('module/info', { params: { Controller_type: controller_type } });
 };
 
+// 运输车
+const carinfo = () => {
+    return request.get('car/info');
+};
+
 export default {
     register,
     info,
     login,
     trailinfo,
-    moduleinfo
+    moduleinfo,
+    carinfo,
 }

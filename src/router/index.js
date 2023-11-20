@@ -9,6 +9,10 @@ const routes = [
     path: '/',
     redirect: '/login',
   },
+  {
+    path: '/404',
+    component: () => import('../views/error-page/index.vue'),
+  },
   // 登录主页
   {
     path: '/homepage',
@@ -105,7 +109,7 @@ const routes = [
         path: '/sample',
         name: 'sample',
         meta: { title: '样本管理' },
-        redirect: '/sample/stats',
+        redirect: '/sample/stats/search',
         component: () => import('../views/home/sample/index.vue'),
         children: [
           {
@@ -117,10 +121,10 @@ const routes = [
           },
           {
             // 样本搜索栏
-            path: '/sample/stats1',
-            name: 'sampleStats1',
+            path: '/sample/stats/search',
+            name: 'sampleSearch',
             meta: { title: '样本搜索' },
-            component: () => import('../views/home/sample/stats/search.vue'),
+            component: () => import('../views/home/sample/stats/search/index.vue'),
           },
           {
             // 执行进度

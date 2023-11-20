@@ -48,72 +48,12 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      formInline: {
-        num: "",
-        code: "",
-        stats: "",
-        intime: "",
-        inpos: "",
-        priority: "",
-        module: "",
-        region: "",
-      },
-      tableData: [
-        {
-          task: "取出",
-          sarea: "AM",
-          stime: "2023-10-24 19:00",
-          tararea: "SM",
-          artime: "2023-10-24 19:00",
-          duration: "1:00",
-          detail: "详情",
-        },
-        {
-          task: "取出",
-          sarea: "AM",
-          stime: "2023-10-24 19:00",
-          tararea: "SM",
-          artime: "2023-10-24 19:00",
-          duration: "1:00",
-          detail: "详情",
-        },
-      ],
-    };
-  },
-  methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
-  },
-};
+import indexjs from "./index.js";
+export default{
+  ...indexjs,
+}
 </script>
 
 <style scoped>
-.main {
-  position: relative;
-  background-color: #ffffff;
-  padding-top: 10px;
-  padding-bottom: 40px;
-  padding-left: 40px;
-  padding-right: 40px;
-  min-height: 800px;
-}
-
-.table {
-  position: relative;
-  top: 10px;
-  bottom: 10px;
-  padding: 10px;
-  border-radius: 4px 4px 4px 4px;
-  opacity: 1;
-  border: 10px;
-  border: 1px solid #000000;
-}
-.el-row {
-  position: relative;
-  top: 20px;
-}
+@import "./index.css";
 </style>

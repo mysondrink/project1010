@@ -4,7 +4,7 @@
       <el-col :span="14" :offset="1"
         ><div><h1>1</h1></div></el-col
       >
-      <el-col :span="7" :offset="1"
+      <el-col :span="5" :offset="3"
         ><el-row>
           <el-button @click="goToPage(1)">轨道状态</el-button>
           <el-button type="primary" @click="goToPage(2)">模块状态</el-button>
@@ -16,11 +16,11 @@
       >
     </el-row>
 
-    <el-row :gutter="20">
+    <el-row :gutter="20" align="center">
       <el-col :span="14" :offset="1"
         ><div><h1>3</h1></div></el-col
       >
-      <el-col :span="7" :offset="1"
+      <el-col :span="5" :offset="3"
         ><div class="calendar-card">
           <div class="calendar-bar">
             <button class="button button-year-minus" @click="minusYear(true)">

@@ -29,7 +29,7 @@ export default {
     return {};
   },
   methods: {},
-  props: ["item", "basePath"], // 父传给子的数据
+  props: ["item", "basePath"], // 子接收到父的数据
 };
 </script>
 
