@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h1>样本详情</h1>
-    <el-descriptions :column="3" :size="size" border>
+    <el-descriptions :column="3" border>
       <el-descriptions-item label="样本编号">123</el-descriptions-item>
       <el-descriptions-item label="条形码">123</el-descriptions-item>
       <el-descriptions-item label="状态">123</el-descriptions-item>
@@ -11,7 +11,7 @@
     </el-descriptions>
     <div class="table">
       <h1>位置</h1>
-      <el-descriptions :size="size" border>
+      <el-descriptions border>
         <el-descriptions-item label="模块">123</el-descriptions-item>
         <el-descriptions-item label="区域">123</el-descriptions-item>
       </el-descriptions>
@@ -40,7 +40,7 @@
         <el-descriptions-item label="下载区域">123</el-descriptions-item>
       </el-descriptions>
     </div>
-    <el-row>
+    <el-row class="btn-row">
       <el-button type="primary">取下</el-button>
       <el-button type="primary">返回</el-button>
     </el-row>
