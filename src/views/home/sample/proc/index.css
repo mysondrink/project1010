@@ -1,40 +1,39 @@
-.pageItem .el-pagination {
-    position: absolute;
-    height: 50px;
-    top: 800px;
-    right: 0;
-    font-size: 18px;
-  }
-  
-  .el-table {
-    font-size: 18px;
-    font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
-    font-weight: 400;
-    text-align: center;
-  }
-  
-  /* 样式穿透 /deep/ or >>> */
-  .el-form-item /deep/ .el-form-item__label{
-    font-size: 18px;
-    font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
-    font-weight: 400;
-    text-align: center;
-  }
-  
-  .el-input /deep/ .el-input__inner,
-  .el-select /deep/ .el-input__inner {
-    font-size: 20px;
-    font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
-    font-weight: 400;
-    text-align: center;
-  }
-  
-  .main {
-    position: relative;
-    background-color: #ffffff;
-    padding-top: 10px;
-    padding-bottom: 40px;
-    padding-left: 40px;
-    padding-right: 40px;
-    min-height: 800px;
-  }
+.el-table {
+  font-size: 18px;
+  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* 样式穿透 /deep/ or >>>
+从vue中分离出css后不再需要样式穿透 */
+.el-form-item .el-form-item__label {
+  font-size: 18px;
+  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
+  font-weight: 400;
+  text-align: center;
+}
+
+.el-input .el-input__inner,
+.el-select .el-input__inner {
+  font-size: 20px;
+  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
+  font-weight: 400;
+  text-align: center;
+}
+
+.el-button {
+  font-size: 16px;
+  font-family: Microsoft YaHei UI-Regular, Microsoft YaHei UI;
+  font-weight: 400;
+}
+
+.main {
+  position: relative;
+  background-color: #ffffff;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  min-height: 800px;
+}

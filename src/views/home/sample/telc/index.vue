@@ -1,72 +1,78 @@
 // 执行进度
 <template>
   <div class="main">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="样本名称">
-          <el-input
-            v-model="formInline.user"
-            placeholder="请输入内容"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="formInline.region" placeholder="活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit" icon="el-icon-plus">新增</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit" icon="el-icon-refresh-right">重置</el-button>
-        </el-form-item>
-      </el-form>
-      <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="num" label="编号" width="180">
-        </el-table-column>
-
-        <el-table-column prop="code" label="条形码" width="180">
-        </el-table-column>
-
-        <el-table-column prop="time2start" label="开始时间" width="180">
-        </el-table-column>
-
-        <el-table-column prop="stats" label="状态" width="180"> </el-table-column>
-        <el-table-column prop="curpos" label="当前位置" width="180">
-        </el-table-column>
-        <el-table-column prop="tarpos" label="目标位置" width="180">
-        </el-table-column>
-        </el-table-column>
-        <el-table-column prop="detail" label="详情" width="180">
-          <template slot-scope="scope">
-          <el-button type="primary" @click="checkDetail()">详情</el-button>
-        </template>
-        </el-table-column>
-      </el-table>
-      <!-- 页数跳转 -->
-      <div class="pageItem">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[20, 40, 60, 80, 100]"
-          :page-size="20"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="100"
+    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form-item label="样本编号">
+        <el-input
+          v-model="formInline.sample_id"
+          placeholder="请输入内容"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="活动区域">
+        <el-select v-model="formInline.position" placeholder="活动区域">
+          <el-option v-for="v in targetList" :label="v" :value="v"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitSearch" icon="el-icon-search"
+          >查询</el-button
         >
-        </el-pagination>
-      </div>
-    </div>
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          @click="clearSearch"
+          icon="el-icon-refresh-right"
+          >重置</el-button
+        >
+      </el-form-item>
+    </el-form>
+    <el-table :data="tableData" stripe>
+      <template v-for="(v, k) in columnTitle">
+        <el-table-column
+          :prop="v.prop"
+          :label="v.label"
+          :min-width="v.minwidth"
+          :align="v.align"
+          :key="k"
+          v-if="k == 6"
+        >
+          <template slot-scope="scope">
+            <el-button type="primary" @click="showDetail()">详情</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column
+          :prop="v.prop"
+          :label="v.label"
+          :min-width="v.minwidth"
+          :align="v.align"
+          :key="k"
+          v-else
+        >
+        </el-table-column>
+      </template>
+    </el-table>
+    <!-- 页数跳转 -->
+    <MyPage
+      :pageData.sync="tableNewData"
+      :PageSize.sync="PageSize"
+      @getTableData="getTableData"
+    />
+    <MyDialog
+      :dialogVisible.sync="dialogVisible"
+      :columnTitle.sync="detailColumnTitle"
+      :dialogType.sync="dialogType"
+      :dialogData="dialogData"
+      :dialogTitle="dialogTitle"
+    />
+  </div>
 </template>
 
 <script>
 import indexjs from "./index.js";
-export default{
+export default {
   ...indexjs,
-}
+};
 </script>
 
 <style scoped>

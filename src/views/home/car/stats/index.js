@@ -119,7 +119,7 @@ export default {
                 },
                 {
                     prop: "position",
-                    label: "最近位置",
+                    label: "最近位置(C)",
                     minwidth: "100",
                     align: "center",
                 },

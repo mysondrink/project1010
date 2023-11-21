@@ -51,7 +51,7 @@ export default {
           url: "/sample",
           icon: "el-icon-sample",
           child: [
-            { name: "样本搜索", url: "/sample/stats/search" },
+            { name: "样本搜索", url: "/sample/stats/search"},
             { name: "执行进度", url: "/sample/telc" },
             { name: "样本处理", url: "/sample/proc" },
             { name: "样本取出", url: "/sample/malt" },

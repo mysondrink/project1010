@@ -82,9 +82,9 @@ export default {
         name: "",
       },
       user: {
-        name: "123",
+        name: "1234",
         password: "123456",
-        telephone: "12312312312",
+        telephone: "12312312315",
       },
       registerRules: {
         pass: [{ validator: validatePass, trigger: "blur" }],

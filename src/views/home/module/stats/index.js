@@ -110,8 +110,8 @@ export default {
                     align: "center",
                 },
                 {
-                    prop: "end_time",
-                    label: "剩余时间",
+                    prop: "time2start",
+                    label: "持续时间(分钟)",
                     minwidth: "180",
                     align: "center",
                 },
@@ -128,7 +128,6 @@ export default {
                     align: "center",
                 },
             ],
-
         };
     },
     methods: {
@@ -184,7 +183,12 @@ export default {
                         break;
                 }
                 data[index].sum = data[index].charge_area + data[index].trans_area;
+                
+                // data[index].updated_at = this.formattedTime(data[index].updated_at);
+                // data[index].created_at = this.formattedTime(data[index].created_at);
+                // data[index].end_time = data[index].updated_at - data[index].created_at;
                 // data[index].module_type = "-";
+                data[index].time2start = this.formattedTime(data[index].updated_at) - this.formattedTime(data[index].created_at);
             }
             this.tableOri = data;
             this.tableData = this.tableOri;
@@ -203,6 +207,27 @@ export default {
             // console.log(val);
             this.tableData = val;
         },
+        formattedTime1(val) {  
+            const date = new Date(val);  
+            const year = date.getFullYear();  
+            const month = date.getMonth() + 1; // JavaScript的月份是从0开始的，所以需要+1  
+            const day = date.getDate();  
+            const hours = date.getHours();  
+            const minutes = date.getMinutes();  
+            const seconds = date.getSeconds();  
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;  
+        },
+        formattedTime(val) {  
+            const date = new Date(val);  
+            // const year = date.getFullYear();  
+            // const month = date.getMonth() + 1; // JavaScript的月份是从0开始的，所以需要+1  
+            // const day = date.getDate();  
+            const hours = date.getHours();  
+            const minutes = date.getMinutes();  
+            // const seconds = date.getSeconds();  
+            return `${minutes + hours * 60}`;  
+        },
+          
     },
     mounted() {
         this.PageSize = 10;

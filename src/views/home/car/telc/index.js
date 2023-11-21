@@ -12,9 +12,9 @@ export default {
             tableData: [], //展示数据
             tableOri: [], //原始数据
             dialogVisible: false,
-            searchItem: {
-                controller_type: "轨道",
-            },
+            // searchItem: {
+            //     controller_type: "轨道",
+            // },
             dialogTitle: "队列详情",
             dialogData: [
                 {
@@ -133,12 +133,6 @@ export default {
         clearSearch() {
             this.formInline.car_id = "";
             this.tableNewData = this.tableOri;
-        },
-        handleSizeChange(val) {
-            console.log(`每页 ${val} 条`);
-        },
-        handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
         },
         getTableData(val) {
             // console.log(val);
